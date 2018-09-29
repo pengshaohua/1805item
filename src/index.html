@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>8.22</title>
+    <style>
+        button{
+            display:block;margin:10px auto;font-size:30px
+			}
+		span{   
+            font-size:60px;display:block;text-align: center;
+		}
+		i{  
+            display:block;
+			width:200px;margin:50px auto;
+			padding:20px 50px;position:fixed;right:0;top:0;
+            visibility: hidden;
+		}
+        p{
+            font-size:30px;
+            margin:20px;
+            font-weight: bold;
+            cursor: pointer; ;
+        }
+		div{
+			display: none;	
+			color: red;	
+			margin: 40px 20px;
+            font-size:30px;	
+		}
+    </style>
+</head>
+<body>
+    <i>
+        <span>00</span>
+        <button>开始</button>
+    </i>
+
+    <p>
+        第一题<br> 
+        function foo() {<br>
+            &nbsp;&nbsp;var a=1;<br>
+            &nbsp;&nbsp;  console.log( this.a );<br>
+        }<br>
+        
+        var a = 2;<br>
+        var o = { a: 3, foo: foo };<br>
+        var p = { a: 4 };<br>
+        
+        o.foo();<br>
+        (p.foo = o.foo)(); <br> 
+    </p>
+    <div id="">
+        答案：<br>3<br>2
+        
+              
+    </div>
+    <br>
+    <br>
+    <br>
+    <hr>
+        <br>
+        <br>
+        <br>
+        <p>第二题<br>  var name = 'World!';<br>
+            (function () {<br>
+                &nbsp;&nbsp; &nbsp;&nbsp;  if (typeof name === 'undefined') {<br>
+                    &nbsp;&nbsp; &nbsp;&nbsp; var name = 'Jack';<br>
+                    &nbsp;&nbsp; &nbsp;&nbsp;  console.log('Goodbye ' + name);<br>
+                    &nbsp;&nbsp; &nbsp;&nbsp;  } else {<br>
+                    &nbsp;&nbsp; &nbsp;&nbsp;  console.log('Hello ' + name);<br>
+                    <br>&nbsp;&nbsp; &nbsp;&nbsp;  }<br>
+            })();
+        </p>
+        <div id=""><br>Goodbye Jack</div>
+			
+        <hr>
+        <br>
+        <br>
+        <br>
+        <p>
+            第三题 <br> var x = 10;<br> 
+            var obj = { <br>
+                &nbsp;&nbsp;  x: 20,<br> 
+                &nbsp;&nbsp; f: function(){<br> 
+                    &nbsp;&nbsp;&nbsp;&nbsp;    console.log(this.x);<br> 
+                    &nbsp;&nbsp;&nbsp;&nbsp;    var foo = function(){<br> 
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   console.log("foo:"+this.x);<br> 
+                        &nbsp;&nbsp;&nbsp;&nbsp;   } <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;   foo();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;   } <br>
+                    &nbsp;&nbsp;};<br>
+            obj.f();<br>
+        </p>
+        <div id="">
+            答案：<br>20<br>foo:10<br>因为foo是var 出来的一个变量，它不是从属于obj，其实是window的属性，所以它里面的this是指向window的
+        </div> 
+       <br><br>
+        <hr>
+        <br><br>
+        <p>
+             第四题 <br> 
+            
+            var a=10;<br>
+            var foo={<br>
+                &nbsp;&nbsp; a:20,<br>
+                &nbsp;&nbsp;  bar:function(){<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;var a=30;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; console.log( this.a);<br>
+                    &nbsp;&nbsp; }<br>
+            }<br>
+            foo.bar();<br>
+           
+            (foo.bar)();<br>
+            
+            (foo.bar=foo.bar)();<br>
+           
+            (foo.bar,foo.bar)();<br>
+			&nbsp;&nbsp; &nbsp;&nbsp;	</p>
+		<div style="font-size:18px">
+			foo.bar() foo调用了bar这个函数,this 指向的是foo,然后foo里面有个对象a,this.a其实就是foo.a。 输出的结果为20<br/><br/>
+            foo.bar 是一个匿名函数,调用这个匿名函数使用的是(),this指向这个匿名函数,但是这个匿名函数仅限于foo里面的全局变量使用,此时this.a就是foo里面的全局变量a. 和上面的调用方法是等价 this指向的就是foo这个对象。输出为20<br/><br/>
+            (foo.bar=foo.bar)()
+            根据=从右向左进行赋值 把右边的foo.bar赋值到左边的foo.bar 等价于把右边的匿名函数重新赋值给foo.bar 此时 foo.bar整体相当于一个全局变量,这个变量是一个函数性质的变量,再用()调用这个函数时 this指向的是全局变量中的a 输出的是10。可以这么理解：        var b = foo.bar; b() 输出的就是10<br><br/>
+            (foo.bar,foo.bar)()例如：a = (3, 4); // 忽略第一个参数，返回最后一个参数；//a = 4// 所以(foo.bar,foo.bar)()等同于如下表达式var f = (foo.bar, foo.bar);   // 直接返回foo.barf()； // 因为f是在全局环境调用,所以this == window。输出10<br>
+                        
+		</div>
+        <br> <br> <br> <br> <br> <br> <br> <br>
+            
+       
+    <script type="text/javascript">
+			
+			
+        var oSpan=document.querySelector('span');
+        var oBtn=document.querySelector('button');
+        var stop=true;
+        var timer;
+        function random(){
+            var num=parseInt(Math.random()*42)
+            if(num==0){
+                num=1
+            }
+            if(num<10){
+                num='0'+num
+            }
+            oSpan.innerHTML=num;
+        }
+        
+        oBtn.onclick=function(){
+            if(stop){
+                timer=setInterval(random,5);
+                oBtn.innerHTML='停止'
+                stop=false;
+            }else{
+                clearInterval(timer);
+                oBtn.innerHTML='开始'
+                stop=true;
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        var oP=document.querySelectorAll('p');
+        var oBox=document.querySelectorAll('div');
+        var stop=true;
+        for (var i=0;i<oP.length;i++) {
+            oP[i].onclick=function(){
+                if (stop) {
+                    this.nextElementSibling.style.display='block';			 			
+                    stop=false
+                }else{
+                    this.nextElementSibling.style.display='none';			 			
+                    stop=true;
+                }
+            }
+        }
+       
+   </script>
+</body>
+</html>
